@@ -69,8 +69,6 @@ def check_lang_dir(dirpath: str, threshold=150, verbose=False, label=False) -> (
             images_en.append(image_information)
 
         img.close()
-        if _iter > 3:
-            break
 
     return images_pl, images_en
 
