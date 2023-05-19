@@ -8,13 +8,11 @@ Zwrócone wartości są w formatach list[dict], list[dict], gdzie dict zawiera i
 
 import os
 import json
-import typing
 
 import pytesseract
 from PIL import Image
 from polyglot.detect import Detector
 from polyglot.detect.base import logger as polyglot_logger
-from pathlib import Path
 
 polyglot_logger.setLevel("ERROR")
 
@@ -83,7 +81,7 @@ def check_lang(word_array: list[str], accuracy=0.1) -> str:
     for word in word_array:
         try:
             det = Detector(word, quiet=True).languages[0].code
-        except Exception:
+        except Exception:  # noqa
             en += 1
             continue
 
@@ -97,17 +95,16 @@ def check_lang(word_array: list[str], accuracy=0.1) -> str:
 
 
 def load_to_json():
-    DIRPATH = "/home/rskay/PycharmProjects/pythonProject/Projekty/Fuckaton/datasets/train_set"
-    for DIR in os.listdir(DIRPATH):
-        if DIR == "resume" or DIR == "budget":
+    dirpath = "/home/rskay/PycharmProjects/pythonProject/Projekty/Fuckaton/datasets/train_set"
+    for directory in os.listdir(dirpath):
+        if directory == "resume" or directory == "budget":
             continue
-        print(DIR)
-        imgpl, imgen = check_lang_dir(os.path.join(DIRPATH, DIR), verbose=True, label=True)
+        print(directory)
+        imgpl, imgen = check_lang_dir(os.path.join(dirpath, directory), verbose=True, label=True)
 
-        with open(f"/home/rskay/PycharmProjects/pythonProject/Projekty/Fuckaton/images/{DIR}.json", "w") as f:
+        with open(f"/home/rskay/PycharmProjects/pythonProject/Projekty/Fuckaton/images/{directory}.json", "w") as f:
             json.dump({"pl": imgpl, "en": imgen}, f, indent=1, ensure_ascii=False)
 
 
 if __name__ == '__main__':
     load_to_json()
-    # [('0059d81f-65ca-43f4-9842-4c1ad34e7481.tiff', 5), ('0099ed1d-42a6-4dc7-ac97-fe3bb86e3370.tiff', 1), ('00de9dce-de99-44e2-8165-f7a9bc523b1f.tiff', 15), ('01fc64bd-f99e-4419-964a-7340e8b7bd27.tiff', 15), ('02321721-6564-4814-b1cc-403117fc192e.tiff', 15), ('0236e4aa-1431-42f3-b938-b6825751c902.tiff', 15), ('029a4957-8a4c-476f-8feb-c3f0e444a4c6.tiff', 15), ('02e676e9-a01e-437c-81ba-9c7280fdcde9.tiff', 15), ('02f9e1f3-69c6-4f9b-84f8-c250c3c0c33e.tiff', 15), ('030075e9-ed70-4bf5-9e5b-cef2bf9923cf.tiff', 6), ('03888526-2497-4f03-99b9-3366a835b427.tiff', 1), ('03c34452-89cf-4e3d-802d-158b95404934.tiff', 15)]
