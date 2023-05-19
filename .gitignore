@@ -1,0 +1,9 @@
+hackathon/*
+datasets/*
+.ipynb_checkpoints
+.virtual_documents
+Untitled.ipynb
+*.h5
+*.tf
+*.pd
+neural/results/*
