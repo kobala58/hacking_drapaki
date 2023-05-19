@@ -52,17 +52,17 @@ def closest_class(data: list, norms: List[Dict]) -> int:
     # for key, val in res.items():
     #     print(f"{key}: {val}")
 
-    new = sorted(res.items(), key=lambda x: x[1], reverse=True)[0]
+    new = sorted(res.items(), key=lambda z: z[1], reverse=True)[0]
 
     return new[0]
 
 
 def __random_image():
     threshold = 150
-    DIRNAME = f"../datasets/train_set/pit37_v1"
-    file = random.choice(os.listdir(DIRNAME))
+    dirname = "../datasets/train_set/pit37_v1"
+    file = random.choice(os.listdir(dirname))
 
-    img = Image.open(DIRNAME + "/" + file).convert("LA")
+    img = Image.open(dirname + "/" + file).convert("LA")
     img = img.point(lambda p: 255 if p > threshold else 0)
 
     ret = pytesseract.image_to_string(img)
